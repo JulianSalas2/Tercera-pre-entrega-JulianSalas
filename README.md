@@ -1,5 +1,5 @@
 Tercera Pre-Entrega Julian Salas
-
+Nota: tengo que decir que todo el trabajo lo hice desde la rama feature/new-code 
 README: Guía de Uso y Prueba del Proyecto
 
 Introducción
