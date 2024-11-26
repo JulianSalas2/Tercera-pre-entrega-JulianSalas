@@ -1,0 +1,27 @@
+{% extends 'appcoder/index.html' %} <!-- Cambia a la base que uses en tu proyecto -->
+
+{% block title %}Lista de Envios{% endblock %}
+
+{% block contenidoQueCambia %}
+<h2>Lista de Envios </h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Descripcion</th>
+            <th>Fecha De Entrega</th>
+            <th>Profesion</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for envio in envios %}
+        <tr>
+            <td>{{ envio.nombre }}</td>
+            <td>{{ envio.descripcion }}</td>
+            <td>{{ envio.fecha_de_entrega }}</td>
+            <td>{{ envio.entregado }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

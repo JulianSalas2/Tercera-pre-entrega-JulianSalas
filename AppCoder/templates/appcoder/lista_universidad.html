@@ -1,0 +1,23 @@
+{% extends 'appcoder/index.html' %} <!-- Cambia a la base que uses en tu proyecto -->
+
+{% block title %}Lista de Universidades{% endblock %}
+
+{% block contenidoQueCambia %}
+<h2>Universidades Disponibles</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>País</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for universidad in universidades %}
+        <tr>
+            <td>{{ universidad.nombre }}</td>
+            <td>{{ universidad.pais }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
