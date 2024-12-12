@@ -11,15 +11,21 @@
             <th>Apellido</th>
             <th>Correo Electronico</th>
             <th>Profesion</th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
-        {% for docente in docentes %}
+        {% for docente in object_list %}
         <tr>
             <td>{{ docente.nombre }}</td>
             <td>{{ docente.apellido }}</td>
             <td>{{ docente.email }}</td>
             <td>{{ docente.profesion }}</td>
+            <th>     
+                <a name=""id=""class="btn btn-info"href="{% url 'editar_docente' docente.id %}"role="button">Editar</a>
+                | 
+                <a name=""id=""class="btn btn-danger"href="{% url 'eliminar_docente' docente.id %}"role="button">Borrar</a>
+            </th>
         </tr>
         {% endfor %}
     </tbody>

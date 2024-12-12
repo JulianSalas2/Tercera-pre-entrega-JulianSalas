@@ -1,7 +1,10 @@
 from django.shortcuts import render , redirect
 from .forms import DocenteForm , UniversidadForm , EnvioForm,AlumnoForm
 from .models import Universidad , Docente , Alumno , Envio
-
+from django.views.generic import ListView
+from django.views.generic.detail import DetailView
+from django.views.generic.edit import CreateView , UpdateView , DeleteView
+from django.urls import reverse_lazy
 # Create your views here.
 
 
@@ -9,89 +12,192 @@ from .models import Universidad , Docente , Alumno , Envio
 def inicio(request):
     return render(request,'appcoder/index.html')
 
+#                                           ClASES BASADAS EN VISTAS (CREAR / AGREGAR)
 
-def agregar_universidad(request):
-    if request.method == 'POST':
-        form = UniversidadForm(request.POST)
-        if form.is_valid():
-            form.save()  # Guarda la universidad si es válido
-            return redirect('lista_universidad')  # Redirige a otra página después de guardar
-    else:
-        form = UniversidadForm()
+class UniversidadCreateView(CreateView):
+    model = Universidad
+    form_class = UniversidadForm
+    template_name = "appcoder/agregar_universidad.html"
+    success_url= reverse_lazy("lista_universidad")
+
+class AlumnoCreateView(CreateView):
+    model = Alumno
+    form_class = AlumnoForm
+    template_name = "appcoder/agregar_alumno.html"
+    success_url= reverse_lazy("lista_alumno")
+    
+class DocenteCreateView(CreateView):
+    model = Docente
+    form_class = DocenteForm
+    template_name = "appcoder/agregar_docente.html"
+    success_url= reverse_lazy("lista_docente")
+    
+class EnvioCreateView(CreateView):
+    model = Envio
+    form_class = EnvioForm
+    template_name = "appcoder/agregar_envio.html"
+    success_url= reverse_lazy("lista_envio")
+
+#                                           ClASES BASADAS EN VISTAS (Update / Editar )
+
+class UniversidadUpdateView(UpdateView):
+    """
+    Vista para editar cursos existentes a través de un formulario
+    """
+    model = Universidad
+    form_class = UniversidadForm
+    template_name = "appcoder/editar_universidad.html"
+    success_url = reverse_lazy("lista_universidad")
+
+class AlumnoUpdateView(UpdateView):
+    """
+    Vista para editar cursos existentes a través de un formulario
+    """
+    model = Alumno
+    form_class = AlumnoForm
+    template_name = "appcoder/editar_alumno.html"
+    success_url = reverse_lazy("lista_alumno")
+    
+class DocenteUpdateView(UpdateView):
+    """
+    Vista para editar cursos existentes a través de un formulario
+    """
+    model = Docente
+    form_class = DocenteForm
+    template_name = "appcoder/editar_docente.html"
+    success_url = reverse_lazy("lista_docente")
+    
+class EnvioUpdateView(UpdateView):
+    """
+    Vista para editar cursos existentes a través de un formulario
+    """
+    model = Envio
+    form_class = EnvioForm
+    template_name = "appcoder/editar_envio.html"
+    success_url = reverse_lazy("lista_envio")
+
+#                                           ClASES BASADAS EN VISTAS (DELETE / Eliminar )
+
+class UniversidadDeleteView(DeleteView):
+    """
+    Vista para eliminar cursos.
+    """
+    model = Universidad
+    success_url = reverse_lazy("lista_universidad")  # URL de redirección después de eliminar un curso
+    template_name = "appcoder/eliminar_universidad.html"  # Plantilla para confirmar la eliminación
+    
+class AlumnoDeleteView(DeleteView):
+    """
+    Vista para eliminar cursos.
+    """
+    model = Alumno
+    success_url = reverse_lazy("lista_alumno")  # URL de redirección después de eliminar un curso
+    template_name = "appcoder/eliminar_alumno.html"  # Plantilla para confirmar la eliminación
+    
+class DocenteDeleteView(DeleteView):
+    """
+    Vista para eliminar cursos.
+    """
+    model = Docente
+    success_url = reverse_lazy("lista_docente")  # URL de redirección después de eliminar un curso
+    template_name = "appcoder/eliminar_docente.html"  # Plantilla para confirmar la eliminación
+    
+class EnvioDeleteView(DeleteView):
+    """
+    Vista para eliminar cursos.
+    """
+    model = Envio
+    success_url = reverse_lazy("lista_envio")  # URL de redirección después de eliminar un curso
+    template_name = "appcoder/eliminar_envio.html"  # Plantilla para confirmar la eliminación
 
 
-    return render(request, 'appcoder/agregar_universidad.html', {'form': form})
+#                                           ClASES BASADAS EN VISTAS ( List /Listas  )
 
 
-def agregar_alumno(request):
-    if request.method == 'POST':
-        form = AlumnoForm(request.POST)
-        if form.is_valid():
-            form.save()
-        return redirect('lista_alumno')
-    else:
-        form = AlumnoForm()
-    return render(request,'appcoder/agregar_alumno.html',{'form':form})
+class UniversidadDetalle(DetailView):
+    """
+    Vista para mostrar los detalles de un curso específico.
+    """
+    model = Universidad
+    template_name = "appcoder/detalle_universidad.html"
+    
+    
+class AlumnoDetalle(DetailView):
+    """
+    Vista para mostrar los detalles de un curso específico.
+    """
+    model = Alumno
+    template_name = "appcoder/detalle_alumno.html"
+    
+    
+class DocenteDetalle(DetailView):
+    """
+    Vista para mostrar los detalles de un curso específico.
+    """
+    model = Docente
+    template_name = "appcoder/detalle_docente.html"
+    
 
+class EnvioDetalle(DetailView):
+    """
+    Vista para mostrar los detalles de un curso específico.
+    """
+    model = Envio
+    template_name = "appcoder/detalle_envio"
 
+#                                           ClASES BASADAS EN VISTAS ( List /Listas  )
 
-def agregar_envio(request):
-    if request.method == 'POST':
-        form = EnvioForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return  redirect('lista_envio')
-    else:
-        form = EnvioForm()
-    return render(request,'appcoder/agregar_envio.html',{'form':form})
-
-
-def agregar_docente(request):
-    # 1. Comprobamos si el formulario ha sido enviado (POST).
-    if request.method == 'POST':
-        # 2. Creamos una instancia del formulario, pasándole los datos que han llegado en el POST.
-        form = DocenteForm(request.POST)
-        
-        # 3. Validamos el formulario para asegurarnos de que los datos son correctos.
-        if form.is_valid():
-            # 4. Si el formulario es válido, guardamos la nueva instancia de Docente en la base de datos.
-            form.save()  # Guarda los datos del formulario como un nuevo objeto Docente
-
-            # 5. Después de guardar los datos, redirigimos a la página de lista de docentes.
-            return redirect('lista_docente')  # Cambia la vista a 'lista_docentes'
-
-    else:
-        # 6. Si no es una petición POST (es decir, es una petición GET), creamos un formulario vacío.
-        form = DocenteForm()
-
-    # 7. Renderizamos la página con el formulario, para que el usuario pueda agregar un docente.
-    return render(request, 'appcoder/agregar_docente.html', {'form': form})
+class UniversidadListView(ListView):
+    """
+    Vista para mostrar una lista de todos los cursos.
+    """
+    model = Universidad  # Modelo con el que trabaja esta vista
+    template_name = "appcoder/lista_universidad.html"  # Plantilla para renderizar la lista
+    
+class AlumnoListView(ListView):
+    """
+    Vista para mostrar una lista de todos los cursos.
+    """
+    model = Alumno  # Modelo con el que trabaja esta vista
+    template_name = "appcoder/lista_alumno.html"  # Plantilla para renderizar la lista
+    
+class DocenteListView(ListView):
+    """
+    Vista para mostrar una lista de todos los cursos.
+    """
+    model = Docente  # Modelo con el que trabaja esta vista
+    template_name = "appcoder/lista_docente.html"  # Plantilla para renderizar la lista
+    
+class EnvioListView(ListView):
+    """
+    Vista para mostrar una lista de todos los cursos.
+    """
+    model = Envio  # Modelo con el que trabaja esta vista
+    template_name = "appcoder/lista_envio.html"  # Plantilla para renderizar la lista
 
 
 #                                                 -------LISTAS-----------
 
-def lista_docente(request):
-    docente = Docente.objects.all()  # Obtiene todos los docentes
-    return render(request, 'appcoder/lista_docente.html', {'docentes': docente})
+# def lista_docente(request):
+#     docente = Docente.objects.all()  # Obtiene todos los docentes
+#     return render(request, 'appcoder/lista_docente.html', {'docentes': docente})
 
-def lista_alumno(request):
-    alumno = Alumno.objects.all()
-    return render(request, 'appcoder/lista_alumno.html',{'alumnos':alumno})
-
-
-def lista_universidad (request):
-    universidad = Universidad.objects.all()
-    return render(request,'appcoder/lista_universidad.html',{'universidades':universidad})
+# def lista_alumno(request):
+#     alumno = Alumno.objects.all()
+#     return render(request, 'appcoder/lista_alumno.html',{'alumnos':alumno})
 
 
-def lista_envio(request):
-    envio = Envio.objects.all()
-    return render(request, 'appcoder/lista_envio.html',{'envios':envio})
+# def lista_universidad (request):
+#     universidad = Universidad.objects.all()
+#     return render(request,'appcoder/lista_universidad.html',{'universidades':universidad})
+
+
+# def lista_envio(request):
+#     envio = Envio.objects.all()
+#     return render(request, 'appcoder/lista_envio.html',{'envios':envio})
 
 
 #                       ----- BUSQUEDA DE UNIVERSIDADES METODO GET------
-
-
 
 def buscar_universidades(request):
     """

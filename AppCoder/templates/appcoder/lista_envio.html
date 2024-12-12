@@ -11,15 +11,21 @@
             <th>Descripcion</th>
             <th>Fecha De Entrega</th>
             <th>Profesion</th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
-        {% for envio in envios %}
+        {% for envio in object_list %}
         <tr>
             <td>{{ envio.nombre }}</td>
             <td>{{ envio.descripcion }}</td>
             <td>{{ envio.fecha_de_entrega }}</td>
             <td>{{ envio.entregado }}</td>
+            <th>     
+                <a name=""id=""class="btn btn-info"href="{% url 'editar_envio' envio.id %}"role="button">Editar</a>
+                | 
+                <a name=""id=""class="btn btn-danger"href="{% url 'eliminar_envio' envio.id %}"role="button">Borrar</a>
+            </th>
         </tr>
         {% endfor %}
     </tbody>

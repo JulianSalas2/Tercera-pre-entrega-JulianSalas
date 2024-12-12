@@ -9,13 +9,19 @@
         <tr>
             <th>Nombre</th>
             <th>País</th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
-        {% for universidad in universidades %}
+        {% for universidad in object_list %}
         <tr>
             <td>{{ universidad.nombre }}</td>
             <td>{{ universidad.pais }}</td>
+            <th>     
+                <a name=""id=""class="btn btn-info"href="{% url 'editar_universidad' universidad.id %}"role="button">Editar</a>
+                | 
+                <a name=""id=""class="btn btn-danger"href="{% url 'eliminar_universidad' universidad.id %}"role="button">Borrar</a>
+            </th>
         </tr>
         {% endfor %}
     </tbody>
